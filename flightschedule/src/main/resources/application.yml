@@ -1,0 +1,54 @@
+server:
+  port: 8070
+
+cdc:
+  offset:
+    storage: kafka
+    flush-interval: 5000
+  config:
+    bootstrap:
+      servers: ${HOST}:9092
+    snapshot:
+      mode: never
+    offset:
+      storage:
+        partitions: 1
+        replication:
+          factor: 1
+        topic: flight_schedule_meta
+    table:
+      include:
+        list: public.flight_schedule
+    database:
+      hostname: ${HOST}
+      port: ${YSQL_PORT}
+      user: yugabyte
+      password: yugabyte
+      dbname: yugabyte
+      streamid: ${YB_STREAM_ID}
+      master:
+        addresses: ${HOST}:7100
+      server:
+        id: 001
+        name: flight_schedule
+    connector:
+      class: io.debezium.connector.yugabytedb.YugabyteDBConnector
+  schema: false
+  name: flight_schedule
+  connector: postgres
+#  stream:
+#    header:
+#      offset: false
+#  flattering:
+#    enabled: false
+
+spring:
+  cloud:
+    stream:
+      function:
+        definition: cdcSupplier
+        bindings:
+          cdcSupplier-out-0: output
+      bindings:
+        output:
+          destination: flight_ops

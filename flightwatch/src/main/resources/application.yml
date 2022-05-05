@@ -1,0 +1,23 @@
+server:
+  port: 8090
+
+spring:
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+
+  data:
+    cassandra:
+      contact-points: $HOST
+      local-datacenter: ybcloud
+      keyspace-name: alerts
+      schema-action: CREATE_IF_NOT_EXISTS
+
+  cloud:
+    stream:
+      function:
+        definition: flightNotifications
+        bindings:
+          flightNotifications-in-0: input
+      bindings:
+        input:
+          destination: flight_watch

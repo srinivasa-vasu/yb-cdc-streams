@@ -1,0 +1,107 @@
+image: humourmind/yugabytedb:2.13.1.0-b112
+
+tasks:
+  - name: 1a-yb-ep
+    before: |
+      yugabyted start --base_dir=$STORE --listen=$HOST --tserver_flags="placement_cloud=ybcloud,placement_region=ap-south-1,placement_zone=ap-south-1a" --master_flags="placement_cloud=ybcloud,placement_region=ap-south-1,placement_zone=ap-south-1a"
+      yb-admin -master_addresses $HOST:7100 modify_placement_info ybcloud.ap-south-1.ap-south-1a 1
+      gp sync-done cluster-config
+  - name: 1aa-ysql-shell
+    init: |
+      gp sync-await cluster-config && gp await-port 5433
+      ysqlsh -h $(hostname -i) -f ./dsql/init-ysql.sql
+      gp sync-done ysql-init
+    command: |
+      ysqlsh -h $(hostname -i)
+  - name: 1ab-ycql-shell
+    init: |
+      gp sync-await cluster-config && gp await-port 9042
+      ycqlsh $(hostname -i) -e "CREATE KEYSPACE ALERTS"
+    command: |
+      ycqlsh $(hostname -i)
+  - name: 1b-import-deps
+    env:
+      KAFKA_VERSION: "3.1.0"
+      JAVA_VERSION: "17.0.2"
+    init: >
+      mkdir -p ${GITPOD_REPO_ROOT}/kafka \
+        &&  curl -sSLo ./kafka.tar.gz https://dlcdn.apache.org/kafka/${KAFKA_VERSION}/kafka_2.13-${KAFKA_VERSION}.tgz \
+        && tar -xvf kafka.tar.gz -C ${GITPOD_REPO_ROOT}/kafka --strip-components=1 \
+        && chmod +x ${GITPOD_REPO_ROOT}/kafka/bin/* \
+        && rm ./kafka.tar.gz \
+        && echo y | sdk install java ${JAVA_VERSION}-librca || true \
+        && gp sync-done import-deps
+  - name: 1ba-zookeeper-ep
+    init: |
+      gp sync-await import-deps
+      ${GITPOD_REPO_ROOT}/kafka/bin/zookeeper-server-start.sh ${GITPOD_REPO_ROOT}/kafka/config/zookeeper.properties
+  - name: 1bb-kafka-ep
+    init: |
+      gp await-port 2181
+      ${GITPOD_REPO_ROOT}/kafka/bin/kafka-server-start.sh ${GITPOD_REPO_ROOT}/kafka/config/server.properties
+  - name: 2aa-supplier
+    before: cd flightschedule
+    init: |
+      gp sync-await import-deps
+      mvn package -DskipTests
+    command: |
+      gp sync-await ysql-init && gp await-port 9092
+      export YB_STREAM_ID=$(yb-admin -master_addresses $HOST:7100 create_change_data_stream ysql.yugabyte | awk '{print $4};{$1=$1}')
+      java -jar target/*.jar
+  - name: 2ab-processor
+    before: cd flightops
+    init: |
+      gp sync-await import-deps
+      mvn package -DskipTests
+    command: |
+      gp await-port 9092
+      java -jar target/*.jar
+  - name: 2ac-consumer
+    before: cd flightwatch
+    init: |
+      gp sync-await import-deps
+      mvn package -DskipTests
+    command: |
+      gp await-port 9092
+      java -jar target/*.jar
+
+ports:
+  - port: 7000
+    name: yb-master-web
+    onOpen: ignore
+  - port: 9000
+    name: yb-tserver-web
+    onOpen: ignore
+  - port: 8070
+    name: sb-supplier
+    onOpen: ignore
+  - port: 8080
+    name: sb-processor
+    onOpen: ignore
+  - port: 8090
+    name: sb-consumer
+    onOpen: ignore
+  - port: 7100
+    name: yb-master-rpc
+    onOpen: ignore
+  - port: 9100
+    name: yb-tserver-rpc
+    onOpen: ignore
+  - port: 5433
+    name: ysql
+    onOpen: ignore
+  - port: 13000
+    name: ysql-api
+    onOpen: ignore
+  - port: 9042
+    name: ycql
+    onOpen: ignore
+  - port: 12000
+    name: ycql-api
+    onOpen: ignore
+  - port: 2181
+    name: zookeeper
+    onOpen: ignore
+  - port: 9092
+    name: kafka
+    onOpen: ignore

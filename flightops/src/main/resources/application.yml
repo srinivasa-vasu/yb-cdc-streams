@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+spring:
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+
+  cloud:
+    stream:
+      function:
+        definition: flightSchedule
+        bindings:
+          flightSchedule-in-0: input
+          flightSchedule-out-0: output
+      bindings:
+        input:
+          destination: flight_ops
+        output:
+          destination: flight_watch
