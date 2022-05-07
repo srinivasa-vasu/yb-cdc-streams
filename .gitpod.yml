@@ -2,10 +2,8 @@ image: humourmind/yugabytedb:2.13.1.0-b112
 
 tasks:
   - name: 1a-yb-ep
-    env:
-      YB_DATA: "${GITPOD_REPO_ROOT}/yugabytedb"
     before: |
-      yugabyted start --base_dir=${YB_DATA} --listen=$HOST --tserver_flags="placement_cloud=ybcloud,placement_region=ap-south-1,placement_zone=ap-south-1a" --master_flags="placement_cloud=ybcloud,placement_region=ap-south-1,placement_zone=ap-south-1a"
+      yugabyted start --base_dir=${GITPOD_REPO_ROOT}/ybdb --listen=$HOST --tserver_flags="placement_cloud=ybcloud,placement_region=ap-south-1,placement_zone=ap-south-1a" --master_flags="placement_cloud=ybcloud,placement_region=ap-south-1,placement_zone=ap-south-1a"
       yb-admin -master_addresses $HOST:7100 modify_placement_info ybcloud.ap-south-1.ap-south-1a 1
       gp sync-done cluster-config
   - name: 1aa-ysql-shell
