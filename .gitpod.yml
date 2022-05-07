@@ -40,8 +40,8 @@ tasks:
       gp await-port 2181
       ${GITPOD_REPO_ROOT}/kafka/bin/kafka-server-start.sh ${GITPOD_REPO_ROOT}/kafka/config/server.properties
   - name: 2aa-supplier
-    before: cd flightschedule
     init: |
+      cd flightschedule
       gp sync-await import-deps
       mvn package -DskipTests
     command: |
@@ -49,16 +49,16 @@ tasks:
       export YB_STREAM_ID=$(yb-admin -master_addresses $HOST:7100 create_change_data_stream ysql.yugabyte | awk '{print $4};{$1=$1}')
       java -jar target/*.jar
   - name: 2ab-processor
-    before: cd flightops
     init: |
+      cd flightops
       gp sync-await import-deps
       mvn package -DskipTests
     command: |
       gp await-port 9092
       java -jar target/*.jar
   - name: 2ac-consumer
-    before: cd flightwatch
     init: |
+      cd flightwatch
       gp sync-await import-deps
       mvn package -DskipTests
     command: |
