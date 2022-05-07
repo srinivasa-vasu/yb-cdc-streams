@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 @Data
 public class FlightSchedule {
 
-	private final static String ROOT_VAL = "value";
+	private final static String NODE_VAL = "value";
 	private String flightNo;
 
 	private LocalDate scheduledDate;
@@ -98,15 +98,15 @@ public class FlightSchedule {
 	}
 
 	private String text(Map<String, String> record) {
-		return record.get(ROOT_VAL);
+		return record.get(NODE_VAL);
 	}
 
 	private LocalDate date(Map<String, String> record) {
-		return LocalDate.ofEpochDay(Long.parseLong(record.get(ROOT_VAL)));
+		return LocalDate.ofEpochDay(Long.parseLong(record.get(NODE_VAL)));
 	}
 
 	private Instant instant(Map<String, String> record) {
-		return Instant.ofEpochMilli(Long.parseLong(record.get(ROOT_VAL)));
+		return Instant.ofEpochMilli(Long.parseLong(record.get(NODE_VAL)));
 	}
 
 }
