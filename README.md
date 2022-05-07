@@ -2,12 +2,11 @@
 
 CDC streams to consume, analyse and enrich data from (point) a to (point) b to (point) z.
 
-It is based on [spring-cloud-stream] (https://docs.spring.io/spring-cloud-stream/docs/current/reference/html/) integration framework to provide an easy-to-use, consistent developer experience to capture, analyze and enrich data processing pipelines across different systems.
+It is based on [spring-cloud-stream](https://docs.spring.io/spring-cloud-stream/docs/current/reference/html/) integration framework to provide an easy-to-use, consistent developer experience to capture, analyze and enrich data processing pipelines acros different systems.
 
-## Sample business case
+## Business case: Flight Schedule API
 
-The flight schedule change information from the source system is captured in real-time and sent to a processing pipeline that applies specific 
-business rules based on the delay in the arrival and departure time to send notifications to the appropriate internal aircraft and customer servicing units.
+Capture the flight schedule change event in real-time from the source system through CDC. Send it to a processing pipeline that applies specific business rules based on the arrival and departure time delay to send notifications to the appropriate internal servicing units such as ground-ops, crew-ops, etc. Similarly, we can extend it to other source events to build the complete flight-ops real-time notification data processing pipeline using CDC.
 
 We use the following services to build the data streaming pipelines:
 * YugabyteDB YSQL is the source database that generates the flight schedule
