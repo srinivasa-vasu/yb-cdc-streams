@@ -3,7 +3,7 @@ image: humourmind/yugabytedb:2.13.1.0-b112
 tasks:
   - name: 1a-yb-ep
     before: |
-      yugabyted start --base_dir=${GITPOD_REPO_ROOT}/ybdb --listen=$HOST --tserver_flags="placement_cloud=ybcloud,placement_region=ap-south-1,placement_zone=ap-south-1a" --master_flags="placement_cloud=ybcloud,placement_region=ap-south-1,placement_zone=ap-south-1a"
+      yugabyted start --base_dir=${GITPOD_REPO_ROOT}/ybdb/ --listen=$HOST --tserver_flags="placement_cloud=ybcloud,placement_region=ap-south-1,placement_zone=ap-south-1a" --master_flags="placement_cloud=ybcloud,placement_region=ap-south-1,placement_zone=ap-south-1a"
       yb-admin -master_addresses $HOST:7100 modify_placement_info ybcloud.ap-south-1.ap-south-1a 1
       gp sync-done cluster-config
   - name: 1aa-ysql-shell
@@ -23,17 +23,18 @@ tasks:
     env:
       KAFKA_VERSION: "3.1.0"
       JAVA_VERSION: "17.0.2"
-    before: >
-      mkdir -p ${GITPOD_REPO_ROOT}/kafka \
-        &&  curl -sSLo ./kafka.tar.gz https://dlcdn.apache.org/kafka/${KAFKA_VERSION}/kafka_2.13-${KAFKA_VERSION}.tgz \
-        && tar -xvf kafka.tar.gz -C ${GITPOD_REPO_ROOT}/kafka --strip-components=1 \
-        && chmod +x ${GITPOD_REPO_ROOT}/kafka/bin/* \
-        && rm ./kafka.tar.gz \
-        && echo y | sdk install java ${JAVA_VERSION}-librca || true \
-        && gp sync-done import-deps
+    before: |
+      mkdir -p ${GITPOD_REPO_ROOT}/kafka
+      curl -sSLo ./kafka.tar.gz https://dlcdn.apache.org/kafka/${KAFKA_VERSION}/kafka_2.13-${KAFKA_VERSION}.tgz
+      tar -xvf kafka.tar.gz -C ${GITPOD_REPO_ROOT}/kafka --strip-components=1
+      chmod +x ${GITPOD_REPO_ROOT}/kafka/bin/*
+      rm ./kafka.tar.gz
+      gp sync-done import-deps-mb
+      echo y | sdk install java ${JAVA_VERSION}-librca || true
+      gp sync-done import-deps-jr
   - name: 1ba-zookeeper-ep
     command: |
-      gp sync-await import-deps
+      gp sync-await import-deps-mb
       ${GITPOD_REPO_ROOT}/kafka/bin/zookeeper-server-start.sh ${GITPOD_REPO_ROOT}/kafka/config/zookeeper.properties
   - name: 1bb-kafka-ep
     command: |
@@ -42,7 +43,7 @@ tasks:
   - name: 2aa-supplier
     before: |
       cd flightschedule
-      gp sync-await import-deps
+      gp sync-await import-deps-jr
       mvn package -DskipTests
     command: |
       gp sync-await ysql-init && gp await-port 9092
@@ -51,7 +52,7 @@ tasks:
   - name: 2ab-processor
     before: |
       cd flightops
-      gp sync-await import-deps
+      gp sync-await import-deps-jr
       mvn package -DskipTests
     command: |
       gp await-port 9092
@@ -59,7 +60,7 @@ tasks:
   - name: 2ac-consumer
     before: |
       cd flightwatch
-      gp sync-await import-deps
+      gp sync-await import-deps-jr
       mvn package -DskipTests
     command: |
       gp await-port 9092
