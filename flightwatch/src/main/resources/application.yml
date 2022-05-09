@@ -19,7 +19,6 @@ spring:
         bindings:
           flightNotifications-in-0: input
       bindings:
-        watch:
-          group: flight_watch
         input:
           destination: flight_watch
+          group: flight_watch_consumer
