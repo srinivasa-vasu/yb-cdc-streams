@@ -13,6 +13,8 @@ spring:
           flightSchedule-in-0: input
           flightSchedule-out-0: output
       bindings:
+        ops:
+          group: flight_ops
         input:
           destination: flight_ops
         output:
