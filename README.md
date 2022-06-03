@@ -16,3 +16,8 @@ We use the following services to build the data streaming pipelines:
 * YugabyteDB YCQL is the target database to keep the notification events.
 
 ![data-pipeline](assets/data-pipeline.png)
+
+### devx
+To have a better getting started experience, we have added the Gitpod support to try this out yourself with a single click. You don't need to make any of the infrastructure components. All you need is to fork the source repo and launch the Gitpod terminal using the browser plugin.
+
+![cdc-gitpod](assets/cdc.gif)
