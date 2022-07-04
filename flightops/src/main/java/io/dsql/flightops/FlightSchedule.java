@@ -98,15 +98,19 @@ public class FlightSchedule {
 	}
 
 	private String text(Map<String, String> record) {
-		return record.get(NODE_VAL);
+		return !isEmpty(record) ? record.get(NODE_VAL) : null;
 	}
 
 	private LocalDate date(Map<String, String> record) {
-		return LocalDate.ofEpochDay(Long.parseLong(record.get(NODE_VAL)));
+		return !isEmpty(record) ? LocalDate.ofEpochDay(Long.parseLong(record.get(NODE_VAL))) : null;
 	}
 
 	private Instant instant(Map<String, String> record) {
-		return Instant.ofEpochMilli(Long.parseLong(record.get(NODE_VAL)));
+		return !isEmpty(record) ? Instant.ofEpochMilli(Long.parseLong(record.get(NODE_VAL))) : null;
+	}
+
+	private static boolean isEmpty(Map map) {
+		return map == null || map.isEmpty();
 	}
 
 }

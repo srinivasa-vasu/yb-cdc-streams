@@ -28,13 +28,17 @@ public enum FlightDelayRule {
 		for (FlightDelayRule record : FlightDelayRule.values()) {
 			switch (record.getMode()) {
 			case A -> {
-				if (between(schedule.sta(), schedule.eta()).toMinutes() >= record.getDelay()) {
-					list.add(record.name());
+				if (schedule.sta() != null && schedule.eta() != null) {
+					if (between(schedule.sta(), schedule.eta()).toMinutes() >= record.getDelay()) {
+						list.add(record.name());
+					}
 				}
 			}
 			case D -> {
-				if (between(schedule.std(), schedule.etd()).toMinutes() >= record.getDelay()) {
-					list.add(record.name());
+				if (schedule.std() != null && schedule.etd() != null) {
+					if (between(schedule.std(), schedule.etd()).toMinutes() >= record.getDelay()) {
+						list.add(record.name());
+					}
 				}
 			}
 			}
