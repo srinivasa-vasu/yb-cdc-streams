@@ -1,4 +1,6 @@
-## Supplier Cloud Stream Service :: Processor
+[![Flight Ops CI](https://github.com/srinivasa-vasu/yb-cdc-streams/actions/workflows/flightops.yml/badge.svg?branch=main)](https://github.com/srinivasa-vasu/yb-cdc-streams/actions/workflows/flightops.yml)
+
+## Cloud Stream Service :: Processor
 
 [flightops](./) is a spring cloud stream based processor function that does the following: 
 

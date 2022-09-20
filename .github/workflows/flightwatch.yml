@@ -1,0 +1,36 @@
+
+name: Flight Watch CI
+
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'info'
+  push:
+    branches:
+      - "**"
+    paths:
+      - flightwatch/**
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: init-checkout
+        uses: actions/checkout@v3
+      - name: init-java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: build
+        run: |
+          cd flightwatch
+          mvn -DskipTests package

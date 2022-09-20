@@ -1,4 +1,6 @@
-## Supplier Cloud Stream Service :: Supplier
+[![Flight Schedule CI](https://github.com/srinivasa-vasu/yb-cdc-streams/actions/workflows/flightschedule.yml/badge.svg?branch=main)](https://github.com/srinivasa-vasu/yb-cdc-streams/actions/workflows/flightschedule.yml)
+
+## Cloud Stream Service :: Supplier
 
 [flightschedule](./) is based on the [Debezium CDC Source](https://github.com/spring-cloud/stream-applications/blob/master/applications/source/cdc-debezium-source/README.adoc) cloud-stream app that does the following:
 
