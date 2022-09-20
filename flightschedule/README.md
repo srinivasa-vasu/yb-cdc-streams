@@ -1,4 +1,4 @@
-[![Flight Schedule CI](https://github.com/srinivasa-vasu/yb-cdc-streams/actions/workflows/flightschedule.yml/badge.svg?branch=main)](https://github.com/srinivasa-vasu/yb-cdc-streams/actions/workflows/flightschedule.yml)
+[![Flight Schedule CI](https://github.com/srinivasa-vasu/yb-cdc-streams/actions/workflows/flightschedule.yml/badge.svg)](https://github.com/srinivasa-vasu/yb-cdc-streams/actions/workflows/flightschedule.yml)
 
 ## Cloud Stream Service :: Supplier
 

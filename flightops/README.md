@@ -1,4 +1,4 @@
-[![Flight Ops CI](https://github.com/srinivasa-vasu/yb-cdc-streams/actions/workflows/flightops.yml/badge.svg?branch=main)](https://github.com/srinivasa-vasu/yb-cdc-streams/actions/workflows/flightops.yml)
+[![Flight Ops CI](https://github.com/srinivasa-vasu/yb-cdc-streams/actions/workflows/flightops.yml/badge.svg)](https://github.com/srinivasa-vasu/yb-cdc-streams/actions/workflows/flightops.yml)
 
 ## Cloud Stream Service :: Processor
 

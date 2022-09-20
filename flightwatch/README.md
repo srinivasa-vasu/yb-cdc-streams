@@ -1,4 +1,4 @@
-[![Flight Watch CI](https://github.com/srinivasa-vasu/yb-cdc-streams/actions/workflows/flightwatch.yml/badge.svg?branch=main)](https://github.com/srinivasa-vasu/yb-cdc-streams/actions/workflows/flightwatch.yml)
+[![Flight Watch CI](https://github.com/srinivasa-vasu/yb-cdc-streams/actions/workflows/flightwatch.yml/badge.svg)](https://github.com/srinivasa-vasu/yb-cdc-streams/actions/workflows/flightwatch.yml)
 
 ## Cloud Stream Service :: Consumer
 
