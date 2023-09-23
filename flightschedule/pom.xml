@@ -67,7 +67,7 @@
 			<artifactId>debezium-connector-yugabytedb</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/debezium-connector-yugabytedb-1.3.5-BETA.jar</systemPath>
+			<systemPath>${project.basedir}/lib/debezium-connector-yugabytedb-1.9.5.y.33.SNAPSHOT.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>io.debezium</groupId>

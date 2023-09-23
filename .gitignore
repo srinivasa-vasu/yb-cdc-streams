@@ -10,6 +10,9 @@ HELP.md
 *.iml
 *.ipr
 
+.DS_Store
+*DS_Store
+
 ### VS Code ###
 .vscode/
 !/.mvn/
