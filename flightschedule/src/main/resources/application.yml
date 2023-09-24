@@ -44,9 +44,10 @@ cdc:
 
 spring:
   cloud:
+    function:
+      definition: cdcSupplier
     stream:
       function:
-        definition: cdcSupplier
         bindings:
           cdcSupplier-out-0: output
       bindings:
