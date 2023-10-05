@@ -17,6 +17,6 @@ spring:
           group: flight_watch_consumer
   cassandra:
     contact-points: $HOST
-    local-datacenter: ybcloud
+    local-datacenter: pandora
     keyspace-name: alerts
     schema-action: CREATE_IF_NOT_EXISTS

@@ -22,3 +22,14 @@ We use the following services to build the data streaming pipelines:
 To have a better getting started experience, we have added the Gitpod support to try this out yourself with a single click. You don't need to make any of the infrastructure components. All you need is to fork the source repo and launch the Gitpod terminal using the browser plugin.
 
 ![cdc-gitpod](assets/cdc.gif)
+
+### CDC event flow from YSQL to YCQL
+Run the following command from `1aa-ysql-shell`:
+```sql
+insert into flight_schedule values('YB524', current_date, 'SIN', 'IND', now()::timestamp, (now()+interval '20 minutes')::timestamp, (now()+interval '20 minutes')::timestamp, (now()-interval '120 minutes')::timestamp, (now()-interval '90 minutes')::timestamp, (now()-interval '120 minutes')::timestamp, 'T4', 'T4');
+```
+
+Run the following command from `1ab-ycql-shell` to verify the changes:
+```sql
+SELECT * FROM flight_watch;
+```

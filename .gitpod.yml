@@ -6,7 +6,7 @@ tasks:
       DATA_PATH: ybdb
     command: |
       mkdir -p ${GITPOD_REPO_ROOT}/${DATA_PATH}
-      yugabyted start --base_dir=${GITPOD_REPO_ROOT}/${DATA_PATH} --advertise_address=$HOST --background=true
+      yugabyted start --base_dir=${GITPOD_REPO_ROOT}/${DATA_PATH} --advertise_address=$HOST --cloud_location=ybcloud.pandora.az1 --background=true
   - name: 1aa-ysql-shell
     before: |
       gp ports await 5433 && sleep 2
@@ -19,7 +19,7 @@ tasks:
       gp ports await 9042
       ycqlsh $(hostname -i) -e "CREATE KEYSPACE ALERTS"
     command: |
-      ycqlsh $(hostname -i)
+      ycqlsh $(hostname -i) -k ALERTS
   - name: 1b-import-deps
     env:
       KAFKA_VERSION: "3.5.1"
