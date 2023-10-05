@@ -19,7 +19,7 @@ tasks:
       gp ports await 9042
       ycqlsh $(hostname -i) -e "CREATE KEYSPACE ALERTS"
     command: |
-      ycqlsh $(hostname -i) -k ALERTS
+      ycqlsh $(hostname -i) -k alerts
   - name: 1b-import-deps
     env:
       KAFKA_VERSION: "3.5.1"
