@@ -5,13 +5,6 @@ spring:
   jackson:
     property-naming-strategy: SNAKE_CASE
 
-  data:
-    cassandra:
-      contact-points: $HOST
-      local-datacenter: ybcloud
-      keyspace-name: alerts
-      schema-action: CREATE_IF_NOT_EXISTS
-
   cloud:
     stream:
       function:
@@ -22,3 +15,8 @@ spring:
         input:
           destination: flight_watch
           group: flight_watch_consumer
+  cassandra:
+    contact-points: $HOST
+    local-datacenter: ybcloud
+    keyspace-name: alerts
+    schema-action: CREATE_IF_NOT_EXISTS
