@@ -4,6 +4,9 @@ CDC streams to consume, analyse and enrich data from (point) a to (point) b to (
 
 It is based on [spring-cloud-stream](https://docs.spring.io/spring-cloud-stream/docs/current/reference/html/) integration framework to provide an easy-to-use, consistent developer experience to capture, analyze and enrich data processing pipelines acros different systems.
 
+## Getting Started with Gitpod:
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/from-referrer/)
+
 ## Business case: Flight Schedule API
 
 Capture the flight schedule change event in real-time from the source system through CDC. Send it to a processing pipeline that applies specific business rules based on the arrival and departure time delay to send notifications to the appropriate internal servicing units such as ground-ops, crew-ops, etc. Similarly, we can extend it to other source events to build the complete flight-ops real-time notification data processing pipeline using CDC.
