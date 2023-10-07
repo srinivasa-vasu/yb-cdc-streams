@@ -67,7 +67,6 @@ tasks:
     command: |
       gp ports await 9092
       java -jar target/*.jar
-
   - name: cdc-stream
     env:
       SCRIPT_PATH: scripts
@@ -78,7 +77,7 @@ tasks:
       chmod +x ${GITPOD_REPO_ROOT}/${SCRIPT_PATH}/prompt.sh
       cd ${GITPOD_REPO_ROOT}/${SCRIPT_PATH}
     command: |
-      gp ports await 8070 && gp ports await 8080 && gp ports await 8090 
+      gp ports await 8070 
       bash prompt.sh
       
 

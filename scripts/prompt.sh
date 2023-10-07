@@ -24,7 +24,7 @@ p "Inserting flight schedule data to ysql to test cdc flow event to ycql"
 
 PROMPT_TIMEOUT=0
 
-ysqlsh -h $(hostname -i) -c "insert into flight_schedule values('YB525', current_date, 'SIN', 'IND', (now()+interval '120 minutes')::timestamp, (now()+interval '120 minutes')::timestamp, (now()+interval '120 minutes')::timestamp, (now()+interval '20 minutes')::timestamp, (now()+interval '20 minutes')::timestamp, (now()+interval '20 minutes')::timestamp, 'T4', 'T4');"
+ysqlsh -h $(hostname -i) -c "insert into flight_schedule values('YB525', current_date, 'SIN', 'IND', (now()+interval '300 minutes')::timestamp, (now()+interval '300 minutes')::timestamp, (now()+interval '300 minutes')::timestamp, (now()+interval '20 minutes')::timestamp, (now()+interval '20 minutes')::timestamp, (now()+interval '20 minutes')::timestamp, 'T4', 'T4');"
 
 PROMPT_TIMEOUT=1
 
