@@ -26,7 +26,7 @@ To have a better getting started experience, we have added the Gitpod support to
 ### CDC event flow from YSQL to YCQL
 Run the following command from `1aa-ysql-shell`:
 ```sql
-insert into flight_schedule values('YB524', current_date, 'SIN', 'IND', now()::timestamp, (now()+interval '20 minutes')::timestamp, (now()+interval '20 minutes')::timestamp, (now()-interval '120 minutes')::timestamp, (now()-interval '90 minutes')::timestamp, (now()-interval '120 minutes')::timestamp, 'T4', 'T4');
+insert into flight_schedule values('YB525', current_date, 'SIN', 'IND', (now()+interval '120 minutes')::timestamp, (now()+interval '120 minutes')::timestamp, (now()+interval '120 minutes')::timestamp, (now()+interval '20 minutes')::timestamp, (now()+interval '20 minutes')::timestamp, (now()+interval '20 minutes')::timestamp, 'T4', 'T4');
 ```
 
 Run the following command from `1ab-ycql-shell` to verify the changes:

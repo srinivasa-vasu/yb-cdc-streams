@@ -33,6 +33,7 @@ tasks:
       gp sync-done import-deps-mb
       echo y | sdk install java ${JAVA_VERSION}-librca || true
       gp sync-done import-deps-jr
+      exit
   - name: 1ba-zookeeper-ep
     command: |
       gp sync-await import-deps-mb
