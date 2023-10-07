@@ -33,3 +33,6 @@ Run the following command from `1ab-ycql-shell` to verify the changes:
 ```sql
 SELECT * FROM flight_watch;
 ```
+
+## Auto pilot
+Experience it from the `cdc-stream` shell

@@ -20,3 +20,4 @@ HELP.md
 !/mvnw.cmd
 !/.springformat
 /flightschedule/src/main/resources/application-local.yml
+/flightwatch/src/main/resources/application-local.yml

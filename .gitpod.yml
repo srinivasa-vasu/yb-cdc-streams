@@ -67,6 +67,20 @@ tasks:
       gp ports await 9092
       java -jar target/*.jar
 
+  - name: cdc-stream
+    env:
+      SCRIPT_PATH: scripts
+    before: |
+      sudo apt-get install pv -y
+      curl -ssLo ${GITPOD_REPO_ROOT}/${SCRIPT_PATH}/pscript https://raw.githubusercontent.com/paxtonhare/demo-magic/master/demo-magic.sh
+      chmod +x ${GITPOD_REPO_ROOT}/${SCRIPT_PATH}/pscript
+      chmod +x ${GITPOD_REPO_ROOT}/${SCRIPT_PATH}/prompt.sh
+      cd ${GITPOD_REPO_ROOT}/${SCRIPT_PATH}
+    command: |
+      gp ports await 8070 && gp ports await 8080 && gp ports await 8090 
+      bash prompt.sh
+      
+
 ports:
   - port: 7000
     name: yb-master-web
