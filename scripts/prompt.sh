@@ -24,7 +24,7 @@ p "Inserting flight schedule data to ysql to test cdc flow event to ycql"
 
 PROMPT_TIMEOUT=0
 
-ysqlsh -h $(hostname -i) -c "insert into flight_schedule values('YB524', current_date, 'SIN', 'IND', now()::timestamp, (now()+interval '20 minutes')::timestamp, (now()+interval '20 minutes')::timestamp, (now()-interval '120 minutes')::timestamp, (now()-interval '90 minutes')::timestamp, (now()-interval '120 minutes')::timestamp, 'T4', 'T4');"
+ysqlsh -h $(hostname -i) -c "insert into flight_schedule(flight_no, scheduled_date, origin, destination, sta, eta, ata, std, etd, atd, scheduled_bay_Id) values('YB529', current_date, 'SIN', 'IND', (now()+interval '320 minutes')::timestamp, (now()+interval '320 minutes')::timestamp, (now()+interval '320 minutes')::timestamp, (now()+interval '10 minutes')::timestamp, (now()+interval '30 minutes')::timestamp, (now()+interval '30 minutes')::timestamp, 'T4');"
 
 PROMPT_TIMEOUT=1
 
@@ -38,11 +38,11 @@ p "Checking an update event flow!"
 
 PROMPT_TIMEOUT=1
 
-p "Update flight scheduled time departure delay by 120 minutes"
+p "Update flight schedule: estimated departure delayed by 20 minutes"
 
 PROMPT_TIMEOUT=0
 
-ysqlsh -h $(hostname -i) -c "update flight_schedule set std=(now()-interval '120 minutes')::timestamp where flight_no='YB525' and scheduled_date = current_date;"
+ysqlsh -h $(hostname -i) -c "update flight_schedule set(std, etd, atd, sta, eta, ata, origin, destination, scheduled_bay_Id) =((now()+interval '10 minutes')::timestamp, (now()+interval '30 minutes')::timestamp, (now()+interval '30 minutes')::timestamp, (now()+interval '320 minutes')::timestamp, (now()+interval '320 minutes')::timestamp, (now()+interval '320 minutes')::timestamp, 'SIN', 'IND', 'T4') where flight_no='YB529' and scheduled_date = current_date;"
 
 PROMPT_TIMEOUT=1
 
